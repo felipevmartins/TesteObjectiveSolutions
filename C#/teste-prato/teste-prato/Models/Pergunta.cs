@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using teste_prato.Utils;
+﻿using teste_prato.Utils;
 
 namespace teste_prato.Models
 {
@@ -12,7 +9,13 @@ namespace teste_prato.Models
             this.prato = prato;
         }
 
-        public string pergunta { get { return String.Format("O prato que você pensou é {0}?", prato.nome); } }
+        public string pergunta
+        {
+            get
+            {
+                return string.Format("O prato que você pensou é {0}?", prato.nome);
+            }
+        }
         public Prato prato { get; set; }
         public FilaPerguntas filaPerguntas { get; set; }
     }

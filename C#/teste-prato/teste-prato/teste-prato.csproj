@@ -6,4 +6,8 @@
     <RootNamespace>teste_prato</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <RuntimeIdentifiers>win10-x64;ubuntu.16.10-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+
 </Project>

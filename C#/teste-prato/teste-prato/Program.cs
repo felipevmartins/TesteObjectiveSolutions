@@ -4,11 +4,11 @@ using teste_prato.Utils;
 
 namespace teste_prato
 {
-    class Program
+    public class Program
     {
         private static FilaPerguntas fila = new FilaPerguntas();
         public static int finalizar = 0;
-        public static int confirmation = 1;
+        public static string confirmation = "n";
         public static string perguntaNomePrato = "Qual prato você pensou?";
         public static string perguntaCaracPrato = "{0} é _____, mas {1} não.";
         static void Main(string[] args)
@@ -20,9 +20,12 @@ namespace teste_prato
         private static void Run()
         {
             fila.setCount(0);
-            confirmation = 1;
+            confirmation = "n";
             Console.WriteLine("Pense em um prato que gosta");
+            Console.WriteLine("Digite qualquer tecla para continuar...");
+            Console.WriteLine();
             Console.ReadKey();
+            Console.WriteLine();
             PercorrerFila(fila);
 
 
@@ -42,9 +45,11 @@ namespace teste_prato
         private static void CriarNovaPergunta(FilaPerguntas filaAtual)
         {
             Console.WriteLine(perguntaNomePrato);
+            Console.WriteLine();
             String nomePratoNovo = Console.ReadLine();
 
             Console.WriteLine(string.Format(perguntaCaracPrato, nomePratoNovo, filaAtual.tail().prato.nome));
+            Console.WriteLine();
             String caracPratoNovo = Console.ReadLine();
 
             if (nomePratoNovo != null || caracPratoNovo != null)
@@ -59,37 +64,45 @@ namespace teste_prato
             }
             else
             {
-                JOptionPane.showConfirmDialog(null, "Você não digitou o nome ou a caracteristica do Prato.", "Erro", JOptionPane.WARNING_MESSAGE);
+                Console.WriteLine("Você não digitou o nome ou a caracteristica do Prato.");
             }
         }
 
         private static void PercorrerFila(FilaPerguntas filaAtual)
         {
             filaAtual.setCount(0);
-            while (confirmation != 0)
+            while (confirmation != "s")
             {
-                confirmation = 1;
+                confirmation = "n";
                 if (filaAtual.size() <= filaAtual.getCount()) break;
 
 
                 Pergunta pergunta = filaAtual.next();
-                confirmation = JOptionPane.showConfirmDialog(null, pergunta.getPergunta(), "Confirm", JOptionPane.YES_NO_OPTION);
+                Console.WriteLine(pergunta.pergunta + "S(Sim)/N(Não)");
+                Console.WriteLine();
+                confirmation = Console.ReadLine().ToLower();
+                Console.WriteLine();
 
-                if ((confirmation == 1 && filaAtual.size() == filaAtual.getCount()))
+                if ((confirmation == "n" && filaAtual.size() == filaAtual.getCount()))
                 {
                     CriarNovaPergunta(filaAtual);
                     break;
                 }
-                else if (confirmation == 0 && filaAtual.size() > filaAtual.getCount() && pergunta.getFilaPerguntas().size() > 0)
+                else if (confirmation == "s" && filaAtual.size() > filaAtual.getCount() && (pergunta.filaPerguntas != null && pergunta.filaPerguntas.size() > 0))
                 {
-                    confirmation = 1;
-                    PercorrerFila(pergunta.getFilaPerguntas());
+                    confirmation = "n";
+                    PercorrerFila(pergunta.filaPerguntas);
                     break;
                 }
-                else if (confirmation == 0 && (filaAtual.size() == filaAtual.getCount() || pergunta.getFilaPerguntas().size() == 0))
+                else if (confirmation == "s" && (filaAtual.size() == filaAtual.getCount() || pergunta.filaPerguntas.size() == 0))
                 {
 
-                    JOptionPane.showMessageDialog(null, "Acertei de novo", "Teste Prato", JOptionPane.QUESTION_MESSAGE);
+                    Console.WriteLine("Acertei de novo");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Você digitou um valor invalido");
                     break;
                 }
 

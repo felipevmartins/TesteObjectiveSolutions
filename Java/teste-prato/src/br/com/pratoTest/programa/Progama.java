@@ -22,13 +22,12 @@ public class Progama {
 	private static void Run() {	
 		fila.setCount(0);
 		confirmation = 1;
-		JOptionPane.showMessageDialog(null, "Pense em um prato que gosta", "Teste Prato", JOptionPane.QUESTION_MESSAGE);
+		int option = JOptionPane.showConfirmDialog(null, "Pense em um prato que gosta", "Teste Prato", JOptionPane.DEFAULT_OPTION);
 		
-		PercorrerFila(fila);
-		
-		
-		Run();
-
+		if(option != -1) {
+			PercorrerFila(fila);
+			Run();
+		}
 	}
 
 	private static void Inicializacao() {
